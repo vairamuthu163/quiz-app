@@ -1,7 +1,7 @@
 <div class="results-container">
   <h2>Quiz Results</h2>
   <section class="score-section">
-      @let isUserPassed = (userScore / questionList.length) * 100 > 50;
+      @let isUserPassed = (userScore / questionList.length) * 100 >= 50;
 
       @let color = isUserPassed ? '#23ab53' : '#ce3d3d';
 

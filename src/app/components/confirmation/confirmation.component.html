@@ -4,6 +4,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
+  @if (data.cancelButtonText) {
   <button
     class="cancel-button"
     mat-button
@@ -12,6 +13,7 @@
   >
     {{ data.cancelButtonText }}
   </button>
+  } @if (data.confirmButtonText) {
   <button
     class="confirm-button"
     mat-raised-button
@@ -20,4 +22,5 @@
   >
     {{ data.confirmButtonText }}
   </button>
+  }
 </mat-dialog-actions>

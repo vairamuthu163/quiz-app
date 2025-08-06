@@ -8,7 +8,10 @@ import { QuestionService } from '../question.service';
 import { take } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationComponent } from '../confirmation/confirmation.component';
+import {
+  ConfirmationComponent,
+  ConfirmationData,
+} from '../confirmation/confirmation.component';
 import { FormatTimerPipe } from '../format-timer.pipe';
 
 @Component({
@@ -32,7 +35,7 @@ export class QuestionComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly questionService = inject(QuestionService);
 
-  public readonly maxTime = 30; // in seconds.
+  public readonly maxTime = 15; // in seconds.
   public timerStopped: boolean = false;
   public readonly questionList: Question[] = this.questionService.questionList;
 
@@ -105,6 +108,7 @@ export class QuestionComponent implements OnInit {
 
           this.selectedOption = '';
           this.questionService.updateUserAnswerList();
+          this.stopTimer();
           this.questionService.clearAllQuestionTimers();
 
           this.router.navigate(['questions', 'results']);
@@ -154,10 +158,10 @@ export class QuestionComponent implements OnInit {
 
   private handleTimer(): void {
     this.currentTimer = JSON.parse(
-      localStorage.getItem(`${this.questionData()?.id}`) ?? '1'
+      localStorage.getItem(`${this.questionData()?.id}`) ?? `${this.maxTime}`
     ) as number;
 
-    if (this.currentTimer >= this.maxTime) {
+    if (this.currentTimer <= 0) {
       this.timerStopped = true;
 
       return;
@@ -168,14 +172,15 @@ export class QuestionComponent implements OnInit {
 
   private startTimer(): void {
     this.timerInterval = setInterval(() => {
-      if (this.currentTimer < this.maxTime) {
-        this.currentTimer++;
+      if (this.currentTimer > 0) {
+        this.currentTimer--;
         localStorage.setItem(
           `${this.questionData()?.id}`,
           this.currentTimer.toString()
         );
       } else {
         this.stopTimer();
+        this.showTimerExceededDialog();
       }
     }, 1000);
   }
@@ -185,5 +190,48 @@ export class QuestionComponent implements OnInit {
       this.timerStopped = true;
       clearInterval(this.timerInterval);
     }
+  }
+
+  private showTimerExceededDialog(): void {
+    const confirmationMessage = this.getConfirmationMessage();
+    const matDialogRef = this.matDialog.open(ConfirmationComponent, {
+      width: '400px',
+      data: {
+        headerText: confirmationMessage.headerText,
+        message: confirmationMessage.message,
+        confirmButtonText: confirmationMessage.confirmButtonText,
+        cancelButtonText: confirmationMessage.cancelButtonText,
+      },
+    });
+
+    matDialogRef
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe(() => {
+        if (!this.isLastQuestion) {
+          this.questionService.updateUserAnswerList();
+          this.navigateToQuestion(1);
+        }
+      });
+  }
+
+  private getConfirmationMessage(): ConfirmationData {
+    if (this.isLastQuestion) {
+      return {
+        headerText: '⏱️Time Over!',
+        message:
+          'Your time limit has ended. Please click submit button to view the results!',
+        confirmButtonText: '',
+        cancelButtonText: 'Ok',
+      };
+    }
+
+    return {
+      headerText: '⏱️Timer Exceeded!',
+      message:
+        'Your time limit has ended. Please click OK to proceed to the next question.',
+      confirmButtonText: 'Ok',
+      cancelButtonText: '',
+    };
   }
 }
