@@ -9,7 +9,7 @@
   height: 100%;
 
   .home-container {
-    width: 40%;
+    width: 50%;
     max-height: 80%;
     overflow: auto;
     background-color: white;
@@ -62,5 +62,11 @@
         }
       }
     }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .home-container {
+    width: 90% !important;
   }
 }

@@ -133,6 +133,7 @@ export class QuestionComponent implements OnInit {
       .subscribe((confirmed) => {
         if (confirmed) {
           this.selectedOption = '';
+          this.stopTimer();
           this.questionService.clearAllAnswers();
           this.router.navigate(['questions']);
         }
