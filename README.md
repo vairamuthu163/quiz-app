@@ -31,6 +31,8 @@ QuizApp is a modern, interactive quiz application built with Angular. It allows 
 - Question not found and 404 error handling
 - Easy navigation between questions
 
+[Live Demo: https://vairamuthu163.github.io/quiz-app/]
+
 ## Screenshots
 
 <!-- Paste screenshots or GIFs of your app below -->
