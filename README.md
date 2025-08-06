@@ -47,6 +47,8 @@ QuizApp is a modern, interactive quiz application built with Angular. It allows 
 
 ![Question Not Found](public/images/question-not-found-page.png)
 
+![Timer Exceeded](public/images/timer-exceeded.png)
+
 **Clear All Answers**
 
 ![Clear All Answers](public/images/clear-all-answers.png)
