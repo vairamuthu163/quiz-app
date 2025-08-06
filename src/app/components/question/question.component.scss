@@ -1,0 +1,5 @@
+@use "../mixin/question.mixin.scss" as *;
+
+:host {
+  @include question_mixin();
+}

@@ -1,0 +1,51 @@
+<div class="results-container">
+  <h2>Quiz Results</h2>
+  <section class="score-section">
+      @let isUserPassed = (userScore / questionList.length) * 100 > 50;
+
+      @let color = isUserPassed ? '#23ab53' : '#ce3d3d';
+
+    <div class="circle-bar" [style.--borderColor]="color">
+      <span class="score">{{ userScore }}</span>
+      <span class="total">/{{ questionList.length }}</span>
+    </div>
+
+
+    <div
+      class="result-info"
+      [style.--textColor]="color"
+    >
+      {{
+        isUserPassed
+          ? "Congratulations! You passed 🥳"
+          : "Better luck next time ☹️"
+      }}
+    </div>
+  </section>
+  <ol class="question-container">
+    @for (question of results; track question.id) {
+    <li>
+      <div class="question-title">
+        {{ question.question }}
+      </div>
+
+      <mat-radio-group
+        class="option-radio-group"
+        [disabled]="true"
+        [ngModel]="question.userAnswer"
+      >
+        @for (option of question?.options; track $index) {
+        <mat-radio-button
+          [ngClass]="{
+          'correct-answer': option === question.correctAnswer,
+          'user-answer': option === question.userAnswer,
+        }"
+          [value]="option"
+          >{{ option }}</mat-radio-button
+        >
+        }
+      </mat-radio-group>
+    </li>
+    }
+  </ol>
+</div>

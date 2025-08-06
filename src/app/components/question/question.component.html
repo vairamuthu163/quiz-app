@@ -1,0 +1,56 @@
+<div class="question-container">
+  <div class="question-header">
+    <div class="question-number">
+      Question: {{ questionData()?.id + "/" + questionList.length }}
+    </div>
+    <div>
+      <span class="question-point">1 point</span>
+      ⏱️{{ currentTimer | formatTimer }}
+    </div>
+  </div>
+  <div class="question-title">
+    {{ questionData()?.question }}
+  </div>
+
+  <mat-radio-group
+    class="option-radio-group"
+    [(ngModel)]="selectedOption"
+    (change)="onSelectionChange()"
+    [disabled]="timerStopped"
+  >
+    @for (option of questionData()?.options; track $index) {
+    <mat-radio-button [value]="option">{{ option }}</mat-radio-button>
+    }
+  </mat-radio-group>
+
+  <div class="question-actions">
+    <div>
+      @if (!isFirstQuestion) {
+      <button class="back-button" (click)="onBackBtnClick()">Back</button>
+      } @if (!isLastQuestion) {
+      <button
+        class="next-button"
+        [disabled]="!timerStopped && !selectedOption"
+        (click)="onNextBtnClick()"
+      >
+        Next
+      </button>
+      }
+    </div>
+
+    <div>
+      <button class="clear-all-button" (click)="onClearAllAnswers()">
+        Clear All
+      </button>
+      @if (isLastQuestion) {
+      <button
+        class="submit-button"
+        [disabled]="!timerStopped && !selectedOption"
+        (click)="onSubmit()"
+      >
+        Submit
+      </button>
+      }
+    </div>
+  </div>
+</div>

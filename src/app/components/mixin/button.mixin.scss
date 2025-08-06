@@ -1,0 +1,26 @@
+@use "sass:color";
+
+@mixin button_mixin(
+  $backgroundColor: #007bff,
+  $fontColor: white,
+  $hoverColor: color.scale($backgroundColor, $lightness: -15%)
+) {
+  margin: 5px;
+  padding: 6px 10px;
+  background-color: $backgroundColor;
+  color: $fontColor;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: $hoverColor;
+  }
+
+  &:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+}

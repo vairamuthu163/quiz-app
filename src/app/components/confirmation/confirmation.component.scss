@@ -1,0 +1,10 @@
+@use "../mixin/button.mixin.scss" as *;
+
+.cancel-button {
+  @include button_mixin(white, black);
+  border: 1px solid #515151;
+}
+
+.confirm-button {
+  @include button_mixin(#28a745);
+}

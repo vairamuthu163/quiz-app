@@ -1,0 +1,45 @@
+@use "../mixin/question.mixin.scss" as *;
+
+.results-container {
+  @include question_mixin();
+
+  .question {
+    &-container {
+      padding: 0 0 0 40px;
+    }
+
+    &-title {
+      margin-top: 6px;
+    }
+  }
+
+  .score-section {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    font-size: 24px;
+
+    .result-info {
+      // Passed the color using css variables.
+      color: var(--textColor);
+      font-size: large;
+      font-weight: 600;
+    }
+
+    .circle-bar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 6px solid var(--borderColor);
+
+      span {
+        color: rgb(126, 126, 126);
+      }
+    }
+  }
+}

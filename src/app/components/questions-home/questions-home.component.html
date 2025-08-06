@@ -1,0 +1,15 @@
+<div class="home-container">
+  @if (showHome) {
+  <section class="start-quiz__section">
+    <h1>Welcome to the Quiz App</h1>
+    <p class="start-quiz__info">
+      Click the button below to start answering questions.
+    </p>
+    <button class="start-quiz__button" (click)="onQuizStart()">
+      Start Quiz
+    </button>
+  </section>
+  } @else {
+  <router-outlet></router-outlet>
+  }
+</div>

@@ -1,0 +1,87 @@
+@use "./button.mixin.scss" as *;
+
+@mixin question_mixin() {
+  .question {
+    &-container {
+      background: #fff;
+      border-radius: 16px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    &-header {
+      font-size: 14px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+
+      .question-number {
+        color: #868686;
+      }
+
+      .question-point {
+        color: #848484;
+      }
+    }
+
+    &-title {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 24px;
+      color: #222;
+      text-align: left;
+    }
+
+    &-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4px;
+
+      .back-button {
+        @include button_mixin();
+      }
+
+      .next-button {
+        @include button_mixin();
+      }
+
+      .submit-button {
+        @include button_mixin(#28a745);
+      }
+
+      .clear-all-button {
+        @include button_mixin(white, black);
+        border: 1px solid #515151;
+      }
+    }
+  }
+
+  .option-radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    mat-radio-button {
+      background-color: #f7f7f7;
+      border-radius: 8px;
+      padding: 6px 12px;
+      color: #333;
+      transition: background-color 0.2s;
+    }
+
+    mat-radio-button.correct-answer {
+      background-color: #b5ffc0;
+      border-radius: 8px;
+      padding: 6px 12px;
+      color: #333;
+    }
+
+    mat-radio-button.user-answer:not(.correct-answer) {
+      background-color: #ffb5b5;
+      border-radius: 8px;
+      padding: 6px 12px;
+      color: #333;
+    }
+  }
+}
